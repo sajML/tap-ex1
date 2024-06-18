@@ -1,0 +1,33 @@
+version: 1
+send_anonymous_usage_stats: true
+project_id: tap-ex1
+default_environment: test
+environments:
+- name: test
+plugins:
+  extractors:
+  - name: tap-ex1
+    namespace: tap_ex1
+    pip_url: -e .
+    capabilities:
+    - state
+    - catalog
+    - discover
+    - about
+    - stream-maps
+    settings:
+    - name: username
+    - name: password
+      kind: string
+      sensitive: true
+    - name: start_date
+      value: '2010-01-01T00:00:00Z'
+    config:
+      start_date: '2010-01-01T00:00:00Z'
+  loaders:
+  - name: target-csv
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/target-csv.git
+    config:
+      output_path: output
+      escape_character: '"'

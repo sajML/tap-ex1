@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  meltano:
+    build:
+      context: .
+      dockerfile: Dockerfile.meltano
+    volumes:
+      - ./output:/app/output
+    command: ["run", "tap-ex1", "target-csv"]
+    #depends_on:
+    #  - db
+
+  fastapi:
+    build:
+      context: .
+      dockerfile: Dockerfile.fastapi
+    volumes:
+      - ./output:/app/output
+    command: ["uvicorn", "run_api:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8001:8000"
+    depends_on:
+      - meltano
+    
+
+  #  db:
+  #    image: postgres:13
+  #    environment:
+  #      POSTGRES_USER: user
+  #      POSTGRES_PASSWORD: password
+  #      POSTGRES_DB: mydatabase
+  #    volumes:
+  #      - db_data:/var/lib/postgresql/data
+
+
+#volumes:
+#  db_data:
