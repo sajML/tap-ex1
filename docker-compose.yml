@@ -8,8 +8,6 @@ services:
     volumes:
       - ./output:/app/output
     command: ["run", "tap-ex1", "target-csv"]
-    #depends_on:
-    #  - db
 
   fastapi:
     build:
@@ -22,17 +20,3 @@ services:
       - "8001:8000"
     depends_on:
       - meltano
-    
-
-  #  db:
-  #    image: postgres:13
-  #    environment:
-  #      POSTGRES_USER: user
-  #      POSTGRES_PASSWORD: password
-  #      POSTGRES_DB: mydatabase
-  #    volumes:
-  #      - db_data:/var/lib/postgresql/data
-
-
-#volumes:
-#  db_data:

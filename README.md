@@ -1,6 +1,6 @@
-# tap-ex1
+# dummyjson tap-ex1 
 
-`tap-ex1` is a Singer tap for Ex1.
+`tap-ex1` is a Singer tap for dummyjson.com (It is a exercise :)
 
 Built with the [Meltano Tap SDK](https://sdk.meltano.com) for Singer Taps.
 
@@ -140,3 +140,8 @@ docker run --volume $(pwd)/output:/app/output ex1-tap-img run tap-ex1 target-csv
 docker build -t ex1-fastapi-img -f Dockerfile.fastapi .
 docker run -p 8001:8000 ex1-fastapi-img
 docker run -p 8001:8000 ex1-fastapi-img uvicorn run_api:app --host 0.0.0.0 --port 8000
+
+
+docker run astro_067921/airflow:latest ls
+
+docker run --volume $(pwd)/output:/app/output sajjadgoudarzi/vicev-ex1-meltano:latest
