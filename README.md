@@ -1,4 +1,4 @@
-# dummyjson tap-ex1 
+# Meltano Extractor for dummyjson.com (tap-ex1)
 
 `tap-ex1` is a Singer tap for dummyjson.com (It is a exercise :)
 
@@ -14,85 +14,31 @@ Install from PyPi:
 
 ```bash
 pipx install tap-ex1
+pip install tap-ex1
 ```
 
 Install from GitHub:
 
 ```bash
-pipx install git+https://github.com/ORG_NAME/tap-ex1.git@main
+pipx install git+https://github.com/sajML/meltano-tap-ex1
 ```
 
--->
-
-## Configuration
-
-### Accepted Config Options
-
-<!--
-Developer TODO: Provide a list of config options accepted by the tap.
-
-This section can be created by copy-pasting the CLI output from:
-
-```
-tap-ex1 --about --format=markdown
-```
--->
-
-A full list of supported settings and capabilities for this
-tap is available by running:
-
-```bash
-tap-ex1 --about
-```
-
-### Configure using environment variables
-
-This Singer tap will automatically import any environment variables within the working directory's
-`.env` if the `--config=ENV` is provided, such that config values will be considered if a matching
-environment variable is set either in the terminal context or in the `.env` file.
-
-### Source Authentication and Authorization
-
-<!--
-Developer TODO: If your tap requires special access on the source system, or any special authentication requirements, provide those here.
 -->
 
 ## Usage
 
 You can easily run `tap-ex1` by itself or in a pipeline using [Meltano](https://meltano.com/).
 
-### Executing the Tap Directly
 
-```bash
-tap-ex1 --version
-tap-ex1 --help
-tap-ex1 --config CONFIG --discover > ./catalog.json
-```
 
-## Developer Resources
-
-Follow these instructions to contribute to this project.
-
-### Initialize your Development Environment
-
-```bash
-pipx install poetry
-poetry install
-```
 
 ### Create and Run Tests
 
-Create tests within the `tests` subfolder and
-  then run:
+You can encapsulate the entire workflow in two Docker images: one for Meltano and another for FastAPI. The process can be executed and accessed via http://localhost:8001 with the following command:
 
 ```bash
-poetry run pytest
-```
-
-You can also test the `tap-ex1` CLI interface directly using `poetry run`:
-
-```bash
-poetry run tap-ex1 --help
+wget https://raw.githubusercontent.com/sajML/meltano-tap-ex1/main/docker-comp-Hub.yaml
+docker compose -f docker-comp-Hub.yaml up
 ```
 
 ### Testing with [Meltano](https://www.meltano.com)
@@ -125,13 +71,8 @@ meltano invoke tap-ex1 --version
 meltano elt tap-ex1 target-jsonl
 ```
 
-### SDK Dev Guide
 
-See the [dev guide](https://sdk.meltano.com/en/latest/dev_guide.html) for more instructions on how to use the SDK to
-develop your own taps and targets.
-
-###
-
+```bash
 docker build -t ex1-tap-img -f Dockerfile.meltano .
 docker run --volume $(pwd)/output:/app/output ex1-tap-img
 docker run --volume $(pwd)/output:/app/output ex1-tap-img run tap-ex1 target-csv
@@ -145,3 +86,4 @@ docker run -p 8001:8000 ex1-fastapi-img uvicorn run_api:app --host 0.0.0.0 --por
 docker run astro_067921/airflow:latest ls
 
 docker run --volume $(pwd)/output:/app/output sajjadgoudarzi/vicev-ex1-meltano:latest
+```
