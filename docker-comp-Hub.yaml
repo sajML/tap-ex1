@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  meltano:
+    image: sajjadgoudarzi/vicev-ex1-meltano:latest
+    volumes:
+      - ./output:/app/output
+    command: ["run", "tap-ex1", "target-csv"]
+
+  fastapi:
+    image: sajjadgoudarzi/vicev-ex1-fastapi:v1
+    volumes:
+      - ./output:/app/output
+    command: ["uvicorn", "run_api:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports:
+      - "8001:8000"
+    depends_on:
+      - meltano
